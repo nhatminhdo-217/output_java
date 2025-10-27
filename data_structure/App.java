@@ -9,6 +9,7 @@ public class App {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         StudentList studentList = new StudentList();
+        studentList.addDummyData();
         boolean running = true;
 
         while (running) {
@@ -18,7 +19,8 @@ public class App {
             System.out.println("3. Find student by ID");
             System.out.println("4. Update student by ID");
             System.out.println("5. Delete student by ID");
-            System.out.println("6. Exit");
+            System.out.println("6. Sort Student by GPA");
+            System.out.println("7. Exit");
             System.out.print("Choose an option: ");
 
             int choice = sc.nextInt();
@@ -91,8 +93,12 @@ public class App {
                             System.out.println("Student deleted successfully!");
                         }
                         break;
-
                     case 6:
+                        studentList.sortStudentByGpa();
+                        studentList.getAllStudent();
+                        break;
+
+                    case 7:
                         running = false;
                         System.out.println("Exiting program...");
                         break;
