@@ -1,4 +1,4 @@
-package data_structure;
+package data_structure.list;
 
 import java.util.Date;
 import java.text.ParseException;

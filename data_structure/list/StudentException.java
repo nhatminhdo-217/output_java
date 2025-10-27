@@ -1,4 +1,4 @@
-package data_structure;
+package data_structure.list;
 
 public class StudentException extends RuntimeException{
 
