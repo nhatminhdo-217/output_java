@@ -42,7 +42,7 @@ public class Main {
                 break;
 
             case 0:
-                System.out.println("Exist...");
+                System.out.println("Exit...");
                 System.exit(0);
                 break;
 

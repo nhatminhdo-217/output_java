@@ -46,6 +46,10 @@ public class Book {
         return available;
     }
 
+    public static String getIdPattern() {
+        return ID_PATTERN;
+    }
+
     public void setTitle(String title) {
         if (!title.isEmpty()) {
          this.title = title.trim();   
@@ -89,7 +93,7 @@ public class Book {
         + "Title: " + title + "\n"
         + "Author: " + author + "\n"
         + "Year: " + year + "\n"
-        + "Price: " + price + "\n"
+        + "Price: $" + price + "\n"
         + "Available: " + available;
     }
 
