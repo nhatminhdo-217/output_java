@@ -1,7 +1,0 @@
-package exceptions;
-
-public class UserExistException extends RuntimeException{
-    public UserExistException(String s) {
-        super(s);
-    }
-}
