@@ -1,8 +1,8 @@
-package library_management_system.book;
+package book;
 
 import java.util.Scanner;
+import validate.Validate;
 
-import library_management_system.Validate;
 
 public class BookProgram {
     private static final Scanner SC = new Scanner(System.in);

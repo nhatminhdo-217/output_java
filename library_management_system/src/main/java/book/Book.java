@@ -1,4 +1,4 @@
-package library_management_system.book;
+package book;
 
 import java.util.List;
 

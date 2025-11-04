@@ -1,4 +1,4 @@
-package library_management_system.user;
+package user;
 
 import java.util.List;
 

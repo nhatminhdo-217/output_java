@@ -1,9 +1,9 @@
-package library_management_system.user;
+package user;
 
 import java.util.Scanner;
 
-import library_management_system.Validate;
-import library_management_system.exceptions.UserExistException;
+import exceptions.UserExistException;
+import validate.Validate;
 
 public class UserProgram {
     private static final Scanner SC = new Scanner(System.in);

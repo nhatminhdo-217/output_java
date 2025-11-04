@@ -1,12 +1,12 @@
-package library_management_system.user;
+package user;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import library_management_system.Validate;
-import library_management_system.exceptions.NoContextInputException;
-import library_management_system.exceptions.UserExistException;
+import exceptions.NoContextInputException;
+import exceptions.UserExistException;
+import validate.Validate;
 
 public class UserList {
     private List<User> listUsers;

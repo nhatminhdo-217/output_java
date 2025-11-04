@@ -1,8 +1,8 @@
-package library_management_system;
+package validate;
 
-import library_management_system.book.Book;
-import library_management_system.exceptions.NoContextInputException;
-import library_management_system.user.User;
+import book.Book;
+import exceptions.NoContextInputException;
+import user.User;
 
 public class Validate {
     public static String validateInput(String s) {

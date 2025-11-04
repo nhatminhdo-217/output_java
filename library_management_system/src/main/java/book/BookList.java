@@ -1,12 +1,12 @@
-package library_management_system.book;
+package book;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import library_management_system.Validate;
-import library_management_system.exceptions.BookExistException;
-import library_management_system.exceptions.NoContextInputException;
+import exceptions.BookExistException;
+import exceptions.NoContextInputException;
+import validate.Validate;
 
 public class BookList {
     private List<Book> listBooks;

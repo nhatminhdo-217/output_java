@@ -1,9 +1,7 @@
-package library_management_system;
-
 import java.util.Scanner;
 
-import library_management_system.book.BookProgram;
-import library_management_system.user.UserProgram;
+import book.BookProgram;
+import user.UserProgram;
 
 public class Main {
     public static final Scanner SCANNER = new Scanner(System.in);
