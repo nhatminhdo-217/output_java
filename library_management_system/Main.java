@@ -3,9 +3,17 @@ package library_management_system;
 import java.util.Scanner;
 
 import library_management_system.book.BookProgram;
+import library_management_system.user.UserProgram;
 
 public class Main {
     public static final Scanner SCANNER = new Scanner(System.in);
+    private BookProgram bookProgram;
+    private UserProgram userProgram;
+
+    public Main() {
+        this.bookProgram = new BookProgram();
+        this.userProgram = new UserProgram();
+    }
 
     public static void main(String[] args) {
         Main main = new Main();
@@ -33,12 +41,11 @@ public class Main {
     public void program(int choice) {
         switch (choice) {
             case 1:
-                BookProgram bookProgram = new BookProgram();
                 bookProgram.run();
                 break;
 
             case 2:
-                System.out.println("This is case 2");
+                userProgram.run();
                 break;
 
             case 0:

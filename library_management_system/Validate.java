@@ -2,6 +2,7 @@ package library_management_system;
 
 import library_management_system.book.Book;
 import library_management_system.exceptions.NoContextInputException;
+import library_management_system.user.User;
 
 public class Validate {
     public static String validateInput(String s) {
@@ -48,6 +49,15 @@ public class Validate {
         String formatStr = s.toUpperCase();
         if (!formatStr.matches(Book.getIdPattern())) {
             throw new IllegalArgumentException("Invalid input format. Id must be Bxxx(eg: B001)!");
+        }
+
+        return formatStr.trim();
+    }
+
+    public static String validateUserIdInput(String s) {
+        String formatStr = s.toUpperCase();
+        if (!formatStr.matches(User.getIdPattern())) {
+            throw new IllegalArgumentException("Invalid input format. Id must be Uxxx(eg: U001)!");
         }
 
         return formatStr.trim();
