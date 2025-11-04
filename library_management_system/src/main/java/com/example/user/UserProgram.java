@@ -18,7 +18,7 @@ public class UserProgram {
                 System.out.println("3. Delete User");
                 System.out.println("4. Search User");
                 System.out.println("5. List All User");
-                System.out.println("0. Back");
+                System.out.println("0. Save and back");
 
                 System.out.print("Choice: ");
                 int choice = Integer.parseInt(SC.nextLine());
@@ -56,7 +56,8 @@ public class UserProgram {
                         listUsers.listAllUser();
                         break;
                     case 0:
-                        System.out.println("Exit...");
+                        listUsers.exportToCSV();
+                        System.out.println("Saved to user.csv. Exit...");
                         return;
 
                     default:

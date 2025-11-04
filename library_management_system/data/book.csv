@@ -1,0 +1,11 @@
+ID,Title,Author,Year,Price,Available
+B001,Clean Code,Robert C. Martin,2008,15.99,true
+B002,Effective Java,Joshua Bloch,2018,18.50,true
+B003,Head First Java,Kathy Sierra,2005,13.75,true
+B004,Java Concurrency in Practice,Brian Goetz,2006,17.80,true
+B005,Spring in Action,Craig Walls,2016,14.25,true
+B006,Thinking in Java,Bruce Eckel,2006,16.40,false
+B007,Core Java Volume I,Cay S. Horstmann,2015,19.20,true
+B008,Java: The Complete Reference,Herbert Schildt,2021,22.10,true
+B009,Beginning Programming with Java,Barry Burd,2020,11.90,false
+B010,Java Design Patterns,James W. Cooper,2017,13.50,true

@@ -62,4 +62,22 @@ public class Validate {
 
         return formatStr.trim();
     }
+
+    public static String validateExportPhone(String phone) {
+        if (!phone.isEmpty()) {
+            if (phone.startsWith("'")) {
+                return phone;
+            }
+            return "'".concat(phone);
+        }
+        throw new IllegalArgumentException("Input cannot be null");
+    }
+
+    public static String validateImportPhone(String phone) {
+        if (!phone.isEmpty()) {
+            return phone.substring(1);
+        }
+        throw new IllegalArgumentException("Input cannot be null");
+
+    }
 }

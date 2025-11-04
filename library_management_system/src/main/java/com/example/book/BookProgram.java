@@ -17,7 +17,7 @@ public class BookProgram {
                 System.out.println("3. Delete Book");
                 System.out.println("4. Search Book");
                 System.out.println("5. List All Book");
-                System.out.println("0. Back");
+                System.out.println("0. Save and back");
 
                 System.out.print("Choice: ");
                 int choice = Integer.parseInt(SC.nextLine());
@@ -48,7 +48,8 @@ public class BookProgram {
                         listBooks.listAllBook();
                         break;
                     case 0:
-                        System.out.println("Exit...");
+                        listBooks.exportToCSV();
+                        System.out.println("Saved to book.csv, Exit...");
                         return;
 
                     default:

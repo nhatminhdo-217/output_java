@@ -18,10 +18,17 @@ public class User {
 
     public User(String name, String email, String phone) {
         this.id = generateNextId();
-        this.name = name;
-        this.email = email;
-        this.phone = phone;
+        setName(name);
+        setEmail(email);
+        setPhone(phone);
     };
+
+    public User(String id, String name, String email, String phone) {
+        setId(id);
+        setName(name);
+        setEmail(email);
+        setPhone(phone);
+    }
 
     public String getId() {
         return id;
@@ -80,6 +87,14 @@ public class User {
             }
         } else {
             throw new IllegalArgumentException("Phone cannot be null");
+        }
+    }
+
+    public void setId(String id) {
+        if (id.matches(ID_PATTERN)) {
+            this.id = id;
+        }else {
+            throw new IllegalArgumentException("Invalid id format (eg: U001)");
         }
     }
 

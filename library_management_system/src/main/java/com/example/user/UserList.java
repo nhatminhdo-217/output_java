@@ -1,5 +1,8 @@
 package com.example.user;
 
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -7,25 +10,45 @@ import java.util.Scanner;
 import com.example.exceptions.NoContextInputException;
 import com.example.exceptions.UserExistException;
 import com.example.validate.Validate;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
+import com.opencsv.exceptions.CsvException;
 
 public class UserList {
     private List<User> listUsers;
     private static final Scanner SC = new Scanner(System.in);
+    private static final String USER_CSV_PATH = "library_management_system/data/user.csv";
 
     public UserList() {
         this.listUsers = new ArrayList<>();
-        listUsers.add(new User("Alice Nguyen", "alice.nguyen@example.com", "0912345678"));
-        listUsers.add(new User("Bob Tran", "bob.tran@example.com", "0901234567"));
-        listUsers.add(new User("Charlie Le", "charlie.le@example.com", "0987654321"));
-        listUsers.add(new User("Daisy Pham", "daisy.pham@example.com", "0971234567"));
-        listUsers.add(new User("Ethan Vo", "ethan.vo@example.com", "0934567890"));
-        listUsers.add(new User("Fiona Ho", "fiona.ho@example.com", "0949876543"));
-        listUsers.add(new User("George Dang", "george.dang@example.com", "0923456789"));
-        listUsers.add(new User("Hannah Bui", "hannah.bui@example.com", "0956789012"));
-        listUsers.add(new User("Ian Do", "ian.do@example.com", "0961237890"));
-        listUsers.add(new User("Jenny Ly", "jenny.ly@example.com", "0994561230"));
+        loadUserFromCSV(USER_CSV_PATH);
 
         User.initializeIdCounter(listUsers);
+    }
+
+    private void loadUserFromCSV(String filePath) {
+        try (CSVReader reader = new CSVReader(new FileReader(filePath))) {
+            List<String[]> rows = reader.readAll();
+
+            for (int i = 1; i < rows.size(); i++) {
+                String[] row = rows.get(i);
+                try {
+                    String id = row[0];
+                    String name = row[1];
+                    String email = row[2];
+                    String phone = Validate.validateImportPhone(row[3]);
+                    
+                    User user = new User(id, name, email, phone); 
+                    this.listUsers.add(user);
+                } catch (IllegalArgumentException iae) {
+                     System.err.println("Error while load User.csv (row " + (i + 1) + "): " + iae.getMessage());
+                } catch (Exception e) {
+                    System.err.println("Error data from User.csv (row " + (i + 1) + ")");
+                }
+            }
+        } catch (IOException | CsvException e) {
+            System.err.println("Can not load " + filePath + ".");
+        }
     }
 
     public User addUserProgram() {
@@ -280,5 +303,23 @@ public class UserList {
         }
 
         listUsers.stream().forEach(System.out::println);
+    }
+
+    public void exportToCSV() {
+        try (CSVWriter writer = new CSVWriter(new FileWriter(USER_CSV_PATH))) {
+            String[] header = {"id", "name", "email", "phone"};
+            writer.writeNext(header);
+            for (User user : listUsers) {
+                String[] row = new String[4];
+                row[0] = user.getId();
+                row[1] = user.getName();
+                row[2] = user.getEmail();
+                row[3] = Validate.validateExportPhone(user.getPhone());
+
+                writer.writeNext(row);
+            }
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        } 
     }
 }

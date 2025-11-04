@@ -13,13 +13,24 @@ public class Book {
     private static final String ID_PATTERN =  "^B\\d{3}$";
     private static int nextId = 1;
 
-    public Book(String title, String author, int year, double price, boolean avaiable) {
+    //Constructor for auto-gen id
+    public Book(String title, String author, int year, double price, boolean available) {
         this.id = generateNextId();
         setTitle(title);
         setAuthor(author);
         setYear(year);
         setPrice(price);
-        setAvailable(avaiable);
+        setAvailable(available);
+    }
+
+    //Constructor for import from csv file
+    public Book(String id, String title, String author, int year, double price, boolean available) {
+        setId(id);
+        setTitle(title);
+        setAuthor(author);
+        setYear(year);
+        setPrice(price);
+        setAvailable(available);
     }
 
     public String getId() {
@@ -84,6 +95,14 @@ public class Book {
 
     public void setAvailable(boolean available) {
         this.available = available;
+    }
+
+    public void setId(String id) {
+        if (id.matches(ID_PATTERN)) {
+            this.id = id;
+        }else {
+            throw new IllegalArgumentException("Invalid id format (eg: B0001)");
+        }
     }
 
     @Override

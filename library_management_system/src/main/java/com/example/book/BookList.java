@@ -1,5 +1,8 @@
 package com.example.book;
 
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -7,24 +10,48 @@ import java.util.Scanner;
 import com.example.exceptions.BookExistException;
 import com.example.exceptions.NoContextInputException;
 import com.example.validate.Validate;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
+import com.opencsv.exceptions.CsvException;
 
 public class BookList {
     private List<Book> listBooks;
     private static final Scanner SC = new Scanner(System.in);
+    private static final String BOOK_CSV_PATH = "library_management_system/data/book.csv";
 
     public BookList() {
         this.listBooks = new ArrayList<>();
+        loadBookFromCSV(BOOK_CSV_PATH);
+        Book.initializeIdCounter(listBooks);
+    }
 
-        listBooks.add(new Book("Clean Code", "Robert C. Martin", 2008, 15.99, true));
-        listBooks.add(new Book("Effective Java", "Joshua Bloch", 2018, 18.50, true));
-        listBooks.add(new Book("Head First Java", "Kathy Sierra", 2005, 13.75, true));
-        listBooks.add(new Book("Java Concurrency in Practice", "Brian Goetz", 2006, 17.80, true));
-        listBooks.add(new Book("Spring in Action", "Craig Walls", 2016, 14.25, true));
-        listBooks.add(new Book("Thinking in Java", "Bruce Eckel", 2006, 16.40, false));
-        listBooks.add(new Book("Core Java Volume I", "Cay S. Horstmann", 2015, 19.20, true));
-        listBooks.add(new Book("Java: The Complete Reference", "Herbert Schildt", 2021, 22.10, true));
-        listBooks.add(new Book("Beginning Programming with Java", "Barry Burd", 2020, 11.90, false));
-        listBooks.add(new Book("Java Design Patterns", "James W. Cooper", 2017, 13.50, true));
+    private void loadBookFromCSV(String filePath) {
+        try (CSVReader reader = new CSVReader(new FileReader(filePath))) {
+            List<String[]> rows = reader.readAll();
+
+            for (int i = 1; i < rows.size(); i++) {
+                String[] row = rows.get(i);
+
+                try {
+                    String id = row[0];
+                    String title = row[1];
+                    String author = row[2];
+                    int year = Integer.parseInt(row[3]);
+                    double price = Double.parseDouble(row[4]);
+                    boolean available = Boolean.parseBoolean(row[5]);
+
+                    Book book = new Book(id, title, author, year, price, available);
+                    this.listBooks.add(book);
+
+                } catch (NumberFormatException nfe) {
+                    System.err.println("Error at row: " + (i+1) + ". Error: " + nfe.getMessage());
+                } catch (IllegalArgumentException iae) {
+                    System.err.println("Error at row " + (i+1) + " with error: " + iae.getMessage());
+                }
+            }
+        } catch (IOException | CsvException e) {
+            System.err.println("Error while load file: " + e.getMessage());
+        }
     }
 
     // Add Book
@@ -278,6 +305,26 @@ public class BookList {
         if (Validate.validateYesNo(newStatus)) {
             book.setAvailable(!book.isAvailable());
         }
+    }
+
+    public void exportToCSV() {
+                try (CSVWriter writer = new CSVWriter(new FileWriter(BOOK_CSV_PATH))) {
+            String[] header = {"id", "title", "author", "year", "price", "available"};
+            writer.writeNext(header);
+            for (Book book : listBooks) {
+                String[] row = new String[6];
+                row[0] = book.getId();
+                row[1] = book.getTitle();
+                row[2] = book.getAuthor();
+                row[3] = String.valueOf(book.getYear());
+                row[4] = String.valueOf(book.getPrice());
+                row[5] = String.valueOf(book.isAvailable());
+
+                writer.writeNext(row);
+            }
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        } 
     }
 
 }
