@@ -194,7 +194,7 @@ public class BookList {
         return listBooks.stream().anyMatch(b -> b.getId().equals(book.getId()));
     }
 
-    private boolean isBookExistById(String id) {
+    public boolean isBookExistById(String id) {
         return listBooks.stream().anyMatch(b -> b.getId().equals(id));
     }
 
@@ -327,4 +327,9 @@ public class BookList {
         } 
     }
 
+    public boolean isBookAvailableById(String id) {
+        Book book = listBooks.stream().filter(b -> b.getId().equalsIgnoreCase(id)).findFirst().get();
+
+        return book.isAvailable();
+    }
 }

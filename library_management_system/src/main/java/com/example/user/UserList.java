@@ -201,7 +201,7 @@ public class UserList {
         user.setName(newName);
     }
 
-    private boolean isUserExistById(String updateId) {
+    public boolean isUserExistById(String updateId) {
         return listUsers.stream().anyMatch(u -> u.getId().equals(updateId));
     }
 

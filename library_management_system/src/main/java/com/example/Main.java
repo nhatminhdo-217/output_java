@@ -2,16 +2,19 @@ package com.example;
 import java.util.Scanner;
 
 import com.example.book.BookProgram;
+import com.example.borrow_records.BorrowProgram;
 import com.example.user.UserProgram;
 
 public class Main {
     public static final Scanner SCANNER = new Scanner(System.in);
     private BookProgram bookProgram;
     private UserProgram userProgram;
+    private BorrowProgram borrowProgram;
 
     public Main() {
         this.bookProgram = new BookProgram();
         this.userProgram = new UserProgram();
+        this.borrowProgram = new BorrowProgram();
     }
 
     public static void main(String[] args) {
@@ -25,6 +28,7 @@ public class Main {
                 System.out.println("\n===== Library Management System =====");
                 System.out.println("1. Book Management");
                 System.out.println("2. User Management");
+                System.out.println("3. Borrow Management");
                 System.out.println("0. Exit");
                 System.out.print("Choice: ");
 
@@ -45,6 +49,10 @@ public class Main {
 
             case 2:
                 userProgram.run();
+                break;
+
+            case 3:
+                borrowProgram.run();
                 break;
 
             case 0:
