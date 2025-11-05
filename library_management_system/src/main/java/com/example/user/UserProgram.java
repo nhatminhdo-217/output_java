@@ -7,7 +7,11 @@ import com.example.validate.Validate;
 
 public class UserProgram {
     private static final Scanner SC = new Scanner(System.in);
-    private UserList listUsers = new UserList();
+    private UserList listUsers;
+
+    public UserProgram(UserList listusers) { //Dependency Injection
+        this.listUsers = listusers;
+    }
 
     public void run() {
         while (true) {

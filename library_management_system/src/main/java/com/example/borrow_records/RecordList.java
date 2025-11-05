@@ -27,10 +27,10 @@ public class RecordList {
     private BookList listBooks;
     private static final String RECORD_CSV_PATH = "library_management_system/data/record.csv";
 
-    public RecordList() {
+    public RecordList(UserList listUsers, BookList listBooks) {
         this.listRecords = new ArrayList<>();
-        this.listUsers = new UserList();
-        this.listBooks = new BookList();
+        this.listUsers = listUsers;
+        this.listBooks = listBooks;
         loadRecordsFromCSV(RECORD_CSV_PATH);
         Record.initializeIdCounter(listRecords);
     }

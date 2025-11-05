@@ -1,5 +1,5 @@
 "id","title","author","year","price","available"
-"B001","Clean Code","Robert C. Martin","2008","15.99","true"
+"B001","Clean Code","Robert C. Martin","2008","15.99","false"
 "B002","Effective Java","Joshua Bloch","2018","18.5","false"
 "B003","Head First Java","Kathy Sierra","2005","13.75","true"
 "B004","Java Concurrency in Practice","Brian Goetz","2006","17.8","false"
@@ -7,5 +7,5 @@
 "B006","Thinking in Java","Bruce Eckel","2006","16.4","false"
 "B007","Core Java Volume I","Cay S. Horstmann","2015","19.2","true"
 "B008","Java: The Complete Reference","Herbert Schildt","2021","22.1","true"
-"B009","Beginning Programming with Java","Barry Burd","2020","11.9","false"
+"B009","Beginning Programming with Java","Barry Burd","2020","11.9","true"
 "B010","Java Design Patterns","James W. Cooper","2017","13.5","true"

@@ -9,7 +9,11 @@ import com.example.validate.Validate;
 
 public class BorrowProgram {
     private static final Scanner SC = new Scanner(System.in);
-    private RecordList listRecords = new RecordList();
+    private RecordList listRecords;
+
+    public BorrowProgram(RecordList listRecords) { //Dependency Injection
+        this.listRecords = listRecords;
+    }
 
 
     public void run() {

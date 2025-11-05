@@ -6,7 +6,11 @@ import com.example.validate.Validate;
 
 public class BookProgram {
     private static final Scanner SC = new Scanner(System.in);
-    private BookList listBooks = new BookList();
+    private BookList listBooks;
+
+    public BookProgram(BookList listBooks) {// Dependency Injection
+        this.listBooks = listBooks;
+    }
 
     public void run() {
         while (true) {

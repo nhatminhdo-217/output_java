@@ -1,8 +1,11 @@
 package com.example;
 import java.util.Scanner;
 
+import com.example.book.BookList;
 import com.example.book.BookProgram;
 import com.example.borrow_records.BorrowProgram;
+import com.example.borrow_records.RecordList;
+import com.example.user.UserList;
 import com.example.user.UserProgram;
 
 public class Main {
@@ -12,9 +15,14 @@ public class Main {
     private BorrowProgram borrowProgram;
 
     public Main() {
-        this.bookProgram = new BookProgram();
-        this.userProgram = new UserProgram();
-        this.borrowProgram = new BorrowProgram();
+
+        BookList listBooks = new BookList();
+        UserList listUsers = new UserList();
+        RecordList listRecords = new RecordList(listUsers, listBooks);
+
+        this.bookProgram = new BookProgram(listBooks);
+        this.userProgram = new UserProgram(listUsers);
+        this.borrowProgram = new BorrowProgram(listRecords);
     }
 
     public static void main(String[] args) {
