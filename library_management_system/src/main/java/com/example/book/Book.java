@@ -13,7 +13,6 @@ public class Book {
     private static final String ID_PATTERN =  "^B\\d{3}$";
     private static int nextId = 1;
 
-    //Constructor for auto-gen id
     public Book(String title, String author, int year, double price, boolean available) {
         this.id = generateNextId();
         setTitle(title);
@@ -23,7 +22,6 @@ public class Book {
         setAvailable(available);
     }
 
-    //Constructor for import from csv file
     public Book(String id, String title, String author, int year, double price, boolean available) {
         setId(id);
         setTitle(title);
@@ -116,6 +114,13 @@ public class Book {
         + "Available: " + available;
     }
 
+    /**
+     * Generate next book id with format Bxxx
+     * 
+     * @return next book id
+     * @throws IllegalStateException when next id is greater than 999
+     * @throws IllegalStateException when new id is not match with id pattern
+     */
     private String generateNextId() {
         if (nextId > 999) {
             throw new IllegalStateException("Maxium id!");
@@ -131,6 +136,11 @@ public class Book {
         return newId;
     }
     
+    /**
+     * Initialize book id counter to set id for the new book that add to list book
+     * @param listBooks list of book to get counter
+     * @exception Exception print out the error with msg
+     */
     public static void initializeIdCounter(List<Book> listBooks) {
         if (listBooks == null || listBooks.isEmpty()) {
             nextId = 1;
@@ -138,6 +148,8 @@ public class Book {
         }
         
         int maxId = 0;
+
+        //Loop to get max id of list book
         for (Book book : listBooks) {
             try {
                 String numericPart = book.getId().substring(1);

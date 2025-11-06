@@ -25,10 +25,17 @@ public class BookList {
         Book.initializeIdCounter(listBooks);
     }
 
+    /**
+     * Get all book information from book.csv and add to listBooks use OpenCSV
+     * 
+     * @param filePath book.csv path
+     * 
+     */
     private void loadBookFromCSV(String filePath) {
         try (CSVReader reader = new CSVReader(new FileReader(filePath))) {
             List<String[]> rows = reader.readAll();
 
+            // Loop throw each row to get book info to add to listBook
             for (int i = 1; i < rows.size(); i++) {
                 String[] row = rows.get(i);
 
@@ -44,9 +51,9 @@ public class BookList {
                     this.listBooks.add(book);
 
                 } catch (NumberFormatException nfe) {
-                    System.err.println("Error at row: " + (i+1) + ". Error: " + nfe.getMessage());
+                    System.err.println("Error at row: " + (i + 1) + ". Error: " + nfe.getMessage());
                 } catch (IllegalArgumentException iae) {
-                    System.err.println("Error at row " + (i+1) + " with error: " + iae.getMessage());
+                    System.err.println("Error at row " + (i + 1) + " with error: " + iae.getMessage());
                 }
             }
         } catch (IOException | CsvException e) {
@@ -54,7 +61,12 @@ public class BookList {
         }
     }
 
-    // Add Book
+    /**
+     * Handle add book into listBook
+     * 
+     * @param book
+     * @throws BookExistException if the book is already exist with particular id
+     */
     public void addBook(Book book) {
         if (!isBookExist(book)) {
             listBooks.add(book);
@@ -63,7 +75,12 @@ public class BookList {
         }
     }
 
-    // Change Book infomation
+    /**
+     * Handle update book information
+     * 
+     * @param id book id
+     * @throws BookExistException if the book is not exist
+     */
     public void changeInformationById(String id) {
         if (isBookExistById(id)) {
             Book book = getBookById(id);
@@ -73,7 +90,12 @@ public class BookList {
         }
     }
 
-    // Delete Book
+    /**
+     * Handle delete book
+     * 
+     * @param book
+     * @throws BookExistException if the book is not exist
+     */
     public void deleteBook(Book book) {
         if (isBookExist(book)) {
             listBooks.remove(book);
@@ -82,7 +104,9 @@ public class BookList {
         }
     }
 
-    // Search Book by title, author or year
+    /**
+     * Handle search book by information using switch case
+     */
     public void searchBook() {
         while (true) {
             try {
@@ -123,11 +147,18 @@ public class BookList {
         }
     }
 
-    // List all book
+    /**
+     * Handle list all book in list using stream
+     */
     public void listAllBook() {
         listBooks.stream().forEach(System.out::println);
     }
 
+    /**
+     * Handle add book program by input book's information and validate
+     * 
+     * @return new Book obj
+     */
     public Book addBookProgram() {
         while (true) {
             try {
@@ -143,7 +174,9 @@ public class BookList {
                 System.out.print("Available (default is true): ");
                 boolean available = Validate.validateAvailableInput(SC.nextLine());
 
+                // Init book id
                 Book.initializeIdCounter(listBooks);
+
                 return new Book(title, author, year, price, available);
 
             } catch (NumberFormatException nfe) {
@@ -156,6 +189,12 @@ public class BookList {
         }
     }
 
+    /**
+     * Handle search book by year and print out Book list using Stream
+     * 
+     * @throws NumberFormatException    if entered year is not a number
+     * @throws IllegalArgumentException if entered year is lower than 0
+     */
     private void searchBookByYear() throws NumberFormatException, IllegalArgumentException {
         System.out.print("Search: ");
         int searchValue = Integer.parseInt(SC.nextLine().trim());
@@ -168,6 +207,11 @@ public class BookList {
 
     }
 
+    /**
+     * Handle search book by author and print out Book list using Stream
+     * 
+     * @throws IllegalArgumentException if search value is empty
+     */
     private void searchBookByAuthor() throws IllegalArgumentException {
         System.out.print("Search: ");
         String searchValue = SC.nextLine().trim();
@@ -176,9 +220,15 @@ public class BookList {
             throw new IllegalArgumentException("Author cannot be null.");
         }
 
-        listBooks.stream().filter(b -> b.getAuthor().toLowerCase().contains(searchValue.toLowerCase())).forEach(System.out::println);
+        listBooks.stream().filter(b -> b.getAuthor().toLowerCase().contains(searchValue.toLowerCase()))
+                .forEach(System.out::println);
     }
 
+    /**
+     * Handle search book by title and print out Book list using Stream
+     * 
+     * @throws IllegalArgumentException if search value is empty
+     */
     private void searchBookByTitle() throws IllegalArgumentException {
         System.out.print("Search: ");
         String searchValue = SC.nextLine().trim();
@@ -187,21 +237,45 @@ public class BookList {
             throw new IllegalArgumentException("Title cannot be null.");
         }
 
-        listBooks.stream().filter(b -> b.getTitle().toLowerCase().contains(searchValue.toLowerCase())).forEach(System.out::println);
+        listBooks.stream().filter(b -> b.getTitle().toLowerCase().contains(searchValue.toLowerCase()))
+                .forEach(System.out::println);
     }
 
+    /**
+     * Check if the book is exist in list using Stream
+     * 
+     * @param book
+     * @return true if the book is exist
+     */
     private boolean isBookExist(Book book) {
         return listBooks.stream().anyMatch(b -> b.getId().equals(book.getId()));
     }
 
+    /**
+     * Check if the book is exist in list by id
+     * 
+     * @param id book id
+     * @return true if the book is exist
+     */
     public boolean isBookExistById(String id) {
         return listBooks.stream().anyMatch(b -> b.getId().equals(id));
     }
 
+    /**
+     * Get the book by id using Stream
+     * 
+     * @param id book id
+     * @return book obj with particular id
+     */
     public Book getBookById(String id) {
         return listBooks.stream().filter(b -> b.getId().equals(id)).findFirst().get();
     }
 
+    /**
+     * Handle change book information program using switch case
+     * 
+     * @param book
+     */
     private void optionChangeInformation(Book book) {
         while (true) {
             try {
@@ -251,12 +325,20 @@ public class BookList {
                 System.out.println("Invalid input format. Please enter a number!");
             } catch (IllegalArgumentException iae) {
                 System.err.println(iae.getMessage());
+            } catch (NoContextInputException ncie) {
+                System.err.println(ncie.getMessage());
             } catch (Exception e) {
                 System.err.println(e.getMessage());
             }
         }
     }
 
+    /**
+     * Handle change book title by input
+     * 
+     * @param book
+     * @throws Exception if new title is not different from old title
+     */
     private void changeBookTitle(Book book) throws Exception {
         System.out.println("Title: " + book.getTitle());
         System.out.print("Change: ");
@@ -268,6 +350,12 @@ public class BookList {
 
     }
 
+    /**
+     * Handle change book author by input
+     * 
+     * @param book
+     * @throws Exception if the new author is not different from old author
+     */
     private void changeBookAuthor(Book book) throws Exception {
         System.out.println("Author: " + book.getAuthor());
         System.out.print("Change: ");
@@ -278,6 +366,14 @@ public class BookList {
         book.setAuthor(newAuthor);
     }
 
+    /**
+     * Handle change book year by input
+     * 
+     * @param book
+     * @throws NumberFormatException    if input is not a number
+     * @throws IllegalArgumentException if the year is lower than zero
+     * @throws Exception                if new year is not different from old year
+     */
     private void changeBookYear(Book book) throws NumberFormatException, IllegalArgumentException, Exception {
         System.out.println("Year: " + book.getYear());
         System.out.print("Change: ");
@@ -288,6 +384,14 @@ public class BookList {
         book.setYear(newYear);
     }
 
+    /**
+     * Handle change book price by input
+     * 
+     * @param book
+     * @throws NumberFormatException    if input is not a number
+     * @throws IllegalArgumentException if the price is lower than zero
+     * @throws Exception                if new price is not different from old price
+     */
     private void changeBookPrice(Book book) throws NumberFormatException, IllegalArgumentException, Exception {
         System.out.println("Price: " + book.getPrice());
         System.out.print("Change: ");
@@ -298,7 +402,14 @@ public class BookList {
         book.setPrice(newPrice);
     }
 
-    private void changeBookAvailable(Book book) throws NumberFormatException, IllegalArgumentException, Exception {
+    /**
+     * Handle change book status by input
+     * 
+     * @param book
+     * @throws IllegalArgumentException if input is not y or n
+     * @throws NoContextInputException  if input is empty
+     */
+    private void changeBookAvailable(Book book) throws IllegalArgumentException, NoContextInputException {
         System.out.println("Available: " + book.isAvailable());
         System.out.print("Change to " + !book.isAvailable() + ":(y/n) ");
         String newStatus = SC.nextLine().trim();
@@ -307,10 +418,15 @@ public class BookList {
         }
     }
 
+    /**
+     * Handle export from list book to .csv file
+     */
     public void exportToCSV() {
-                try (CSVWriter writer = new CSVWriter(new FileWriter(BOOK_CSV_PATH))) {
-            String[] header = {"id", "title", "author", "year", "price", "available"};
+        try (CSVWriter writer = new CSVWriter(new FileWriter(BOOK_CSV_PATH))) {
+            // write header first
+            String[] header = { "id", "title", "author", "year", "price", "available" };
             writer.writeNext(header);
+            // write content
             for (Book book : listBooks) {
                 String[] row = new String[6];
                 row[0] = book.getId();
@@ -324,9 +440,15 @@ public class BookList {
             }
         } catch (IOException e) {
             System.err.println(e.getMessage());
-        } 
+        }
     }
 
+    /**
+     * Check if the book with particular id is available
+     * 
+     * @param id book id
+     * @return true if the book is available
+     */
     public boolean isBookAvailableById(String id) {
         Book book = listBooks.stream().filter(b -> b.getId().equalsIgnoreCase(id)).findFirst().get();
 
